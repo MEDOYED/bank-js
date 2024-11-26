@@ -33,3 +33,20 @@ document.addEventListener('keydown', function (e) {
     closeModalWindow();
   }
 });
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+const message = document.createElement('div');
+message.classList.add('.cookie-message');
+
+message.innerHTML =
+  'Ми используем cookie на етом сайте для улутшения функциональности. <button class="btn btn--close-cookie">Ok!</button>';
+
+const header = document.querySelector('.header');
+header.append(message);
+
+document
+  .querySelector('.btn--close-cookie')
+  .addEventListener('click', function () {
+    message.remove();
+  });
