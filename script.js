@@ -36,37 +36,54 @@ document.addEventListener('keydown', function (e) {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-const message = document.createElement('div');
-message.classList.add('cookie-message');
+// const message = document.createElement('div');
+// message.classList.add('cookie-message');
 
-message.innerHTML =
-  'Ми используем cookie на етом сайте для улутшения функциональности. <button class="btn btn--close-cookie">Ok!</button>';
+// message.innerHTML =
+//   'Ми используем cookie на етом сайте для улутшения функциональности. <button class="btn btn--close-cookie">Ok!</button>';
 
-const header = document.querySelector('.header');
-header.append(message);
+// const header = document.querySelector('.header');
+// header.append(message);
 
-document
-  .querySelector('.btn--close-cookie')
-  .addEventListener('click', function () {
-    message.remove();
-  });
+// document
+//   .querySelector('.btn--close-cookie')
+//   .addEventListener('click', function () {
+//     message.remove();
+//   });
 
-// style
+// // style
 
-message.style.backgroundColor = '#076785';
-message.style.width = '120%';
-console.log(getComputedStyle(message));
-console.log('dd');
-console.log(getComputedStyle(message).color);
-console.log(getComputedStyle(message).height);
+// message.style.backgroundColor = '#076785';
+// message.style.width = '120%';
+// console.log(getComputedStyle(message));
+// console.log('dd');
+// console.log(getComputedStyle(message).color);
+// console.log(getComputedStyle(message).height);
 
-message.style.height =
-  Number.parseFloat(getComputedStyle(message).height) + 50 + 'px';
+// message.style.height =
+//   Number.parseFloat(getComputedStyle(message).height) + 50 + 'px';
 
-// classes
-const logo = document.querySelector('.nav__logo');
+// // classes
+// const logo = document.querySelector('.nav__logo');
 
-logo.classList.add('a', 'b');
-logo.classList.remove('a', 'b');
-logo.classList.toggle('a');
-logo.classList.contains('a');
+// logo.classList.add('a', 'b');
+// logo.classList.remove('a', 'b');
+// logo.classList.toggle('a');
+// logo.classList.contains('a');
+
+const btnScrollTo = document.querySelector('.btn--scroll-to');
+const section1 = document.querySelector('#section--1');
+
+btnScrollTo.addEventListener('click', function (e) {
+  // FIRST METHOD
+  // const section1Coords = section1.getBoundingClientRect();
+  // console.log(section1Coords);
+
+  // window.scrollTo({
+  //   left: section1Coords.left + window.scrollX,
+  //   top: section1Coords.top + window.scrollY,
+  //   behavior: 'smooth',
+  // });
+
+  section1.scrollIntoView({ behavior: 'smooth' });
+});
