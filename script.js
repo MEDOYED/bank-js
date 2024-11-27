@@ -37,7 +37,7 @@ document.addEventListener('keydown', function (e) {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 const message = document.createElement('div');
-message.classList.add('.cookie-message');
+message.classList.add('cookie-message');
 
 message.innerHTML =
   'Ми используем cookie на етом сайте для улутшения функциональности. <button class="btn btn--close-cookie">Ok!</button>';
@@ -50,3 +50,23 @@ document
   .addEventListener('click', function () {
     message.remove();
   });
+
+// style
+
+message.style.backgroundColor = '#076785';
+message.style.width = '120%';
+console.log(getComputedStyle(message));
+console.log('dd');
+console.log(getComputedStyle(message).color);
+console.log(getComputedStyle(message).height);
+
+message.style.height =
+  Number.parseFloat(getComputedStyle(message).height) + 50 + 'px';
+
+// classes
+const logo = document.querySelector('.nav__logo');
+
+logo.classList.add('a', 'b');
+logo.classList.remove('a', 'b');
+logo.classList.toggle('a');
+logo.classList.contains('a');
