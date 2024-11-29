@@ -87,3 +87,33 @@ btnScrollTo.addEventListener('click', function (e) {
 
   section1.scrollIntoView({ behavior: 'smooth' });
 });
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// event propagination
+// rgb (123, 56, 78)
+
+function getRandomIntInclusive(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * max - min + 1) + min;
+}
+
+const getRandomColor = () =>
+  `rgb(${getRandomIntInclusive(0, 255)}, ${getRandomIntInclusive(
+    0,
+    255
+  )}, ${getRandomIntInclusive(0, 255)})`;
+
+console.log(getRandomColor());
+
+document.querySelector('.nav__link').addEventListener('click', function (e) {
+  this.style.backgroundColor = getRandomColor();
+});
+
+document.querySelector('.nav__links').addEventListener('click', function (e) {
+  console.log('click the link');
+});
+
+document.querySelector('.nav').addEventListener('click', function (e) {
+  console.log('click the link');
+});
