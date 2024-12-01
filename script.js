@@ -6,9 +6,9 @@
 const modalWindow = document.querySelector('.modal-window');
 const overlay = document.querySelector('.overlay');
 const btnCloseModalWindow = document.querySelector('.btn--close-modal-window');
-const btnsOpenModalWindow = document.querySelectorAll(
-  '.btn--show-modal-window'
-);
+const btnsOpenModalWindow = document.querySelectorAll('.btn--show-modal-window');
+const btnScrollTo = document.querySelector('.btn--scroll-to');
+const section1 = document.querySelector('#section--1');
 
 const openModalWindow = function (e) {
   e.preventDefault();
@@ -21,9 +21,7 @@ const closeModalWindow = function () {
   overlay.classList.add('hidden');
 };
 
-btnsOpenModalWindow.forEach(button =>
-  button.addEventListener('click', openModalWindow)
-);
+btnsOpenModalWindow.forEach(button => button.addEventListener('click', openModalWindow));
 
 btnCloseModalWindow.addEventListener('click', closeModalWindow);
 overlay.addEventListener('click', closeModalWindow);
@@ -34,6 +32,48 @@ document.addEventListener('keydown', function (e) {
   }
 });
 
+// прокручування сторінки
+
+btnScrollTo.addEventListener('click', function (e) {
+  // FIRST METHOD
+  // const section1Coords = section1.getBoundingClientRect();
+  // console.log(section1Coords);
+
+  // window.scrollTo({
+  //   left: section1Coords.left + window.scrollX,
+  //   top: section1Coords.top + window.scrollY,
+  //   behavior: 'smooth',
+  // });
+
+  section1.scrollIntoView({ behavior: 'smooth' });
+});
+
+// smooth page naviganion  #bad way
+
+// document.querySelectorAll('.nav__link').forEach(function (htmlElement) {
+//   htmlElement.addEventListener('click', function (e) {
+//     e.preventDefault();
+//     const href = this.getAttribute('href');
+//     document.querySelector(href).scrollIntoView({ behavior: 'smooth' });
+//     console.log(href);
+//   });
+// });
+
+// smooth page naviganion
+// Додаєм event listener для ЗАГАЛЬНОГО батьківського елемента
+document.querySelector('.nav__links').addEventListener('click', function (e) {
+  e.preventDefault();
+  //опридиляем target element
+  console.log(e.target); //<a class="nav__link" href="#section--1">Услуги</a>  --> при натисканні на першу силку
+  if (e.target.closest('.nav__link')) {
+    const href = e.target.getAttribute('href');
+    console.log(href);
+    document.querySelector(href).scrollIntoView({ behavior: 'smooth' });
+  }
+});
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // const message = document.createElement('div');
@@ -71,49 +111,32 @@ document.addEventListener('keydown', function (e) {
 // logo.classList.toggle('a');
 // logo.classList.contains('a');
 
-const btnScrollTo = document.querySelector('.btn--scroll-to');
-const section1 = document.querySelector('#section--1');
-
-btnScrollTo.addEventListener('click', function (e) {
-  // FIRST METHOD
-  // const section1Coords = section1.getBoundingClientRect();
-  // console.log(section1Coords);
-
-  // window.scrollTo({
-  //   left: section1Coords.left + window.scrollX,
-  //   top: section1Coords.top + window.scrollY,
-  //   behavior: 'smooth',
-  // });
-
-  section1.scrollIntoView({ behavior: 'smooth' });
-});
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // event propagination
 // rgb (123, 56, 78)
 
-function getRandomIntInclusive(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * max - min + 1) + min;
-}
+// function getRandomIntInclusive(min, max) {
+//   min = Math.ceil(min);
+//   max = Math.floor(max);
+//   return Math.floor(Math.random() * max - min + 1) + min;
+// }
 
-const getRandomColor = () =>
-  `rgb(${getRandomIntInclusive(0, 255)}, ${getRandomIntInclusive(
-    0,
-    255
-  )}, ${getRandomIntInclusive(0, 255)})`;
+// const getRandomColor = () =>
+//   `rgb(${getRandomIntInclusive(0, 255)}, ${getRandomIntInclusive(
+//     0,
+//     255
+//   )}, ${getRandomIntInclusive(0, 255)})`;
 
-console.log(getRandomColor());
+// console.log(getRandomColor());
 
-document.querySelector('.nav__link').addEventListener('click', function (e) {
-  this.style.backgroundColor = getRandomColor();
-});
+// document.querySelector('.nav__link').addEventListener('click', function (e) {
+//   this.style.backgroundColor = getRandomColor();
+// });
 
-document.querySelector('.nav__links').addEventListener('click', function (e) {
-  console.log('click the link');
-});
+// document.querySelector('.nav__links').addEventListener('click', function (e) {
+//   console.log('click the link');
+// });
 
-document.querySelector('.nav').addEventListener('click', function (e) {
-  console.log('click the link');
-});
+// document.querySelector('.nav').addEventListener('click', function (e) {
+//   console.log('click the link');
+// });
