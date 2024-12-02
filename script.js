@@ -14,6 +14,8 @@ const tabs = document.querySelectorAll('.operations__tab');
 const tabContainer = document.querySelector('.operations__tab-container');
 const tabContents = document.querySelectorAll('.operations__content');
 
+const nav = document.querySelector('.nav');
+
 const openModalWindow = function (e) {
   e.preventDefault();
   modalWindow.classList.remove('hidden');
@@ -92,6 +94,33 @@ tabContainer.addEventListener('click', function (e) {
     .querySelector(`.operations__content--${clickedButton.dataset.tab}`)
     .classList.add('operations__content--active');
 });
+
+// АНІМАЦІЯ ПРИТУСКНІННЯ НА ПАНЕЛІ НАВІГАЦІЇ
+const navLinksHoverAnimation = function (e, opacity) {
+  if (e.target.classList.contains('nav__link')) {
+    const linkOver = e.target;
+    const siblingLinks = linkOver.closest('.nav__links').querySelectorAll('.nav__link');
+    const logo = linkOver.closest('.nav').querySelector('img');
+    const logoText = linkOver.closest('.nav').querySelector('.nav__text');
+
+    siblingLinks.forEach(el => {
+      if (el != linkOver) {
+        el.style.opacity = opacity;
+      }
+      logo.style.opacity = opacity;
+      logoText.style.opacity = opacity;
+    });
+  }
+};
+
+nav.addEventListener('mouseover', function (e) {
+  navLinksHoverAnimation(e, 0.4);
+});
+
+nav.addEventListener('mouseout', function (e) {
+  navLinksHoverAnimation(e, 1);
+});
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
