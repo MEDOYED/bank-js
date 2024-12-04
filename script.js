@@ -136,25 +136,12 @@ nav.addEventListener('mouseout', function (e) {
 
 //attaching a header at the top of the page -- Intersection Observer API (наблюдатель пересечения API)
 
-// const observerCallback = function (entries, observer) {
-//   entries.forEach(entry => console.log(entry));
-// };
-
-// const observerOptions = {
-//   root: null,
-//   threshold: [0, 0.2],
-// };
-
-// const observer = new IntersectionObserver(observerCallback, observerOptions);
-// observer.observe(section1);
-
 const header = document.querySelector('.header');
 
 const navHeight = nav.getBoundingClientRect().height;
 
 const getStickyNav = function (entries) {
   const entry = entries[0];
-  console.log(entry);
   if (!entry.isIntersecting) {
     nav.classList.add('sticky');
   } else {
@@ -162,13 +149,34 @@ const getStickyNav = function (entries) {
   }
 };
 
-const observer = new IntersectionObserver(getStickyNav, {
+const headerObserver = new IntersectionObserver(getStickyNav, {
   root: null,
   threshold: 0,
   rootMargin: `-${navHeight}px`,
 });
-observer.observe(header);
+headerObserver.observe(header);
 
+// Плавне поява секцій на сайті при прокручуванні
+
+const allSections = document.querySelectorAll('.section');
+
+const appearenceSection = function (entries, observer) {
+  const entry = entries[0];
+  console.log(entry);
+  if (!entry.isIntersecting) return;
+  entry.target.classList.remove('section--hidden');
+  observer.unobserve(entry.target);
+};
+
+const sectionObserver = new IntersectionObserver(appearenceSection, {
+  root: null,
+  threshold: 0.25,
+});
+
+allSections.forEach(function (section) {
+  sectionObserver.observe(section);
+  section.classList.add('section--hidden');
+});
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
