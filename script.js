@@ -162,7 +162,7 @@ const allSections = document.querySelectorAll('.section');
 
 const appearenceSection = function (entries, observer) {
   const entry = entries[0];
-  console.log(entry);
+  // console.log(entry);
   if (!entry.isIntersecting) return;
   entry.target.classList.remove('section--hidden');
   observer.unobserve(entry.target);
@@ -177,6 +177,35 @@ allSections.forEach(function (section) {
   sectionObserver.observe(section);
   section.classList.add('section--hidden');
 });
+
+// lazy loading для зображень
+const lazyImages = document.querySelectorAll('img[data-src]');
+
+const loadImages = function (entries, observer) {
+  const entry = entries[0];
+  console.log(entry);
+
+  if (!entry.isIntersecting) return;
+
+  // Заміняєм погане зображення на зображення з високою якістю
+
+  entry.target.src = entry.target.dataset.src;
+
+  entry.target.addEventListener('load', function () {
+    entry.target.classList.remove('lazy-img');
+  });
+
+  observer.unobserve(entry.target);
+};
+
+const lazyImagesObserver = new IntersectionObserver(loadImages, {
+  root: null,
+  threshold: 0.7,
+  rootMargin: '400px',
+});
+
+lazyImages.forEach(image => lazyImagesObserver.observe(image));
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
