@@ -211,17 +211,23 @@ lazyImages.forEach(image => lazyImagesObserver.observe(image));
 const slides = document.querySelectorAll('.slide');
 const btnLeft = document.querySelector('.slider__btn--left');
 const btnRight = document.querySelector('.slider__btn--right');
+const dotContainer = document.querySelector('.dots');
 
 let currentSlide = 0;
 const slidesNumber = slides.length;
 
-// const slider = document.querySelector('.slider');
-// slider.style.transform = 'scale(0.4)';
-// slider.style.overflow = 'visible';
+const createDots = function () {
+  slides.forEach(function (_, index) {
+    dotContainer.insertAdjacentHTML(
+      'beforeend',
+      `<button class="dots__dot" data-slide="${index}"></button>`
+    );
+  });
+};
 
-slides.forEach((slide, index) => (slide.style.transform = `translateX(${index * 100}%)`));
+createDots();
 
-btnRight.addEventListener('click', function () {
+const nextSlide = function () {
   if (currentSlide === slidesNumber - 1) {
     currentSlide = 0;
   } else {
@@ -230,9 +236,9 @@ btnRight.addEventListener('click', function () {
   slides.forEach(
     (slide, index) => (slide.style.transform = `translateX(${(index - currentSlide) * 100}%)`)
   );
-});
+};
 
-btnLeft.addEventListener('click', function () {
+const previousSlide = function () {
   if (currentSlide === 0) {
     currentSlide = slidesNumber - 1;
   } else {
@@ -241,6 +247,24 @@ btnLeft.addEventListener('click', function () {
   slides.forEach(
     (slide, index) => (slide.style.transform = `translateX(${(index - currentSlide) * 100}%)`)
   );
+};
+
+btnRight.addEventListener('click', nextSlide);
+
+btnLeft.addEventListener('click', previousSlide);
+
+document.addEventListener('keydown', function (e) {
+  console.log(e);
+  if (e.key === 'ArrowRight') nextSlide();
+  if (e.key === 'ArrowLeft') previousSlide();
+});
+
+dotContainer.addEventListener('click', function (e) {
+  if (e.target.classList.contains('dots__dot')) {
+    // console.log('dot was clicked');
+    const slide = e.target.dataset.slide;
+    slides.forEach((s, index) => (s.style.transform = `translateX(${(index - slide) * 100}%)`));
+  }
 });
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
