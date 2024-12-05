@@ -201,10 +201,47 @@ const loadImages = function (entries, observer) {
 const lazyImagesObserver = new IntersectionObserver(loadImages, {
   root: null,
   threshold: 0.7,
-  rootMargin: '400px',
+  // rootMargin: '400px',
 });
 
 lazyImages.forEach(image => lazyImagesObserver.observe(image));
+
+// Створення слайдера
+
+const slides = document.querySelectorAll('.slide');
+const btnLeft = document.querySelector('.slider__btn--left');
+const btnRight = document.querySelector('.slider__btn--right');
+
+let currentSlide = 0;
+const slidesNumber = slides.length;
+
+// const slider = document.querySelector('.slider');
+// slider.style.transform = 'scale(0.4)';
+// slider.style.overflow = 'visible';
+
+slides.forEach((slide, index) => (slide.style.transform = `translateX(${index * 100}%)`));
+
+btnRight.addEventListener('click', function () {
+  if (currentSlide === slidesNumber - 1) {
+    currentSlide = 0;
+  } else {
+    currentSlide++;
+  }
+  slides.forEach(
+    (slide, index) => (slide.style.transform = `translateX(${(index - currentSlide) * 100}%)`)
+  );
+});
+
+btnLeft.addEventListener('click', function () {
+  if (currentSlide === 0) {
+    currentSlide = slidesNumber - 1;
+  } else {
+    currentSlide--;
+  }
+  slides.forEach(
+    (slide, index) => (slide.style.transform = `translateX(${(index - currentSlide) * 100}%)`)
+  );
+});
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
