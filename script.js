@@ -6,7 +6,9 @@
 const modalWindow = document.querySelector('.modal-window');
 const overlay = document.querySelector('.overlay');
 const btnCloseModalWindow = document.querySelector('.btn--close-modal-window');
-const btnsOpenModalWindow = document.querySelectorAll('.btn--show-modal-window');
+const btnsOpenModalWindow = document.querySelectorAll(
+  '.btn--show-modal-window'
+);
 const btnScrollTo = document.querySelector('.btn--scroll-to');
 const section1 = document.querySelector('#section--1');
 
@@ -27,7 +29,9 @@ const closeModalWindow = function () {
   overlay.classList.add('hidden');
 };
 
-btnsOpenModalWindow.forEach(button => button.addEventListener('click', openModalWindow));
+btnsOpenModalWindow.forEach(button =>
+  button.addEventListener('click', openModalWindow)
+);
 
 btnCloseModalWindow.addEventListener('click', closeModalWindow);
 overlay.addEventListener('click', closeModalWindow);
@@ -89,7 +93,9 @@ tabContainer.addEventListener('click', function (e) {
   clickedButton.classList.add('operations__tab--active');
 
   // Активный контент
-  tabContents.forEach(content => content.classList.remove('operations__content--active'));
+  tabContents.forEach(content =>
+    content.classList.remove('operations__content--active')
+  );
   document
     .querySelector(`.operations__content--${clickedButton.dataset.tab}`)
     .classList.add('operations__content--active');
@@ -99,7 +105,9 @@ tabContainer.addEventListener('click', function (e) {
 const navLinksHoverAnimation = function (e, opacity) {
   if (e.target.classList.contains('nav__link')) {
     const linkOver = e.target;
-    const siblingLinks = linkOver.closest('.nav__links').querySelectorAll('.nav__link');
+    const siblingLinks = linkOver
+      .closest('.nav__links')
+      .querySelectorAll('.nav__link');
     const logo = linkOver.closest('.nav').querySelector('img');
     const logoText = linkOver.closest('.nav').querySelector('.nav__text');
 
@@ -216,6 +224,8 @@ const dotContainer = document.querySelector('.dots');
 let currentSlide = 0;
 const slidesNumber = slides.length;
 
+// slides.forEach(s => (s.style.opacity = '0.2'));
+
 const createDots = function () {
   slides.forEach(function (_, index) {
     dotContainer.insertAdjacentHTML(
@@ -227,15 +237,40 @@ const createDots = function () {
 
 createDots();
 
+const activateCurrentDot = function (slide) {
+  document
+    .querySelectorAll('.dots__dot')
+    .forEach(dot => dot.classList.remove('dots__dot--active'));
+  document
+    .querySelector(`.dots__dot[data-slide="${slide}"]`)
+    .classList.add('dots__dot--active');
+};
+
+const activateCurrentSlide = function (currentSlide) {
+  slides.forEach(
+    (slide, index) =>
+      (slide.style.transform = `translateX(${(index - currentSlide) * 100}%)`)
+  );
+};
+
+activateCurrentSlide(0);
+
+activateCurrentDot(0);
+
 const nextSlide = function () {
   if (currentSlide === slidesNumber - 1) {
     currentSlide = 0;
   } else {
     currentSlide++;
   }
+
+  // пересування до наступного слайду
   slides.forEach(
-    (slide, index) => (slide.style.transform = `translateX(${(index - currentSlide) * 100}%)`)
+    (slide, index) =>
+      (slide.style.transform = `translateX(${(index - currentSlide) * 100}%)`)
   );
+
+  activateCurrentDot(currentSlide);
 };
 
 const previousSlide = function () {
@@ -244,9 +279,14 @@ const previousSlide = function () {
   } else {
     currentSlide--;
   }
+
+  // пересування до попередньго слайду (томущо currentSlide-- '2 строчки зверху')
   slides.forEach(
-    (slide, index) => (slide.style.transform = `translateX(${(index - currentSlide) * 100}%)`)
+    (slide, index) =>
+      (slide.style.transform = `translateX(${(index - currentSlide) * 100}%)`)
   );
+
+  activateCurrentDot(currentSlide);
 };
 
 btnRight.addEventListener('click', nextSlide);
@@ -254,16 +294,19 @@ btnRight.addEventListener('click', nextSlide);
 btnLeft.addEventListener('click', previousSlide);
 
 document.addEventListener('keydown', function (e) {
-  console.log(e);
   if (e.key === 'ArrowRight') nextSlide();
   if (e.key === 'ArrowLeft') previousSlide();
 });
 
+// клік по точках слайдера
 dotContainer.addEventListener('click', function (e) {
   if (e.target.classList.contains('dots__dot')) {
-    // console.log('dot was clicked');
     const slide = e.target.dataset.slide;
-    slides.forEach((s, index) => (s.style.transform = `translateX(${(index - slide) * 100}%)`));
+    slides.forEach(
+      (s, index) =>
+        (s.style.transform = `translateX(${(index - slide) * 100}%)`)
+    );
+    activateCurrentDot(slide);
   }
 });
 
