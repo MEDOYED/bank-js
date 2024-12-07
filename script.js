@@ -224,8 +224,6 @@ const dotContainer = document.querySelector('.dots');
 let currentSlide = 0;
 const slidesNumber = slides.length;
 
-// slides.forEach(s => (s.style.opacity = '0.2'));
-
 const createDots = function () {
   slides.forEach(function (_, index) {
     dotContainer.insertAdjacentHTML(
@@ -378,3 +376,10 @@ dotContainer.addEventListener('click', function (e) {
 // document.querySelector('.nav').addEventListener('click', function (e) {
 //   console.log('click the link');
 // });
+
+// При закриванні сторінки вспливає попап чи тоно я хочу закрити сторінку
+
+window.addEventListener('beforeunload', function (e) {
+  e.preventDefault();
+  e.returnValue = '';
+});
