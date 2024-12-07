@@ -379,7 +379,7 @@ dotContainer.addEventListener('click', function (e) {
 
 // При закриванні сторінки вспливає попап чи тоно я хочу закрити сторінку
 
-window.addEventListener('beforeunload', function (e) {
-  e.preventDefault();
-  e.returnValue = '';
-});
+// window.addEventListener('beforeunload', function (e) {
+//   e.preventDefault();
+//   e.returnValue = '';
+// });
